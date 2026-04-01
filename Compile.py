@@ -50,15 +50,15 @@ for current_path, folder_names, file_names in os.walk(base_folder): #go through 
                 else:
                     SpStr = RStrip.split("=")
                     if len(SpStr) == 2:
-                        if len(SpStr[0].split("def")) == 1:
-                            if SpStr[0][0] != " ":
+                        if SpStr[0][0] != " ":
+                            if SpStr[0] not in VarsToChange:
                                 VarsToChange.append(SpStr[0].replace(" ",""))
+                    
                     new_lines.append(RStrip)
             for i in new_lines:
                 end = i
                 for Change in VarsToChange:
-                    # Skip if this is the declaration line itself
-                    if not end.strip().startswith(f"{Change} =") and not end.strip().startswith(f"{Change}="):
+                    if not end.startswith(" "):
                         end = end.replace(Change, f"{file[:-3]}.{Change}")
                 for Numb in range(len(ChangeImportOld)):
                     end = end.replace(ChangeImportOld[Numb],ChangeImportNew[Numb])

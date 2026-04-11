@@ -16,9 +16,10 @@ jobs:
       
       - name: Install dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          apt-get update && apt-get install -y xvfb
       
       - name: Run Pygame Application for 10 seconds
         run: |
@@ -26,7 +27,7 @@ jobs:
       
       - name: Generate Screenshot
         run: |
-          python << 'EOF'
+          xvfb-run -a -s "-screen 0 1024x768x24" python << 'EOF'
           import pygame
           pygame.init()
           screen = pygame.display.set_mode((1024, 768))
